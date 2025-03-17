@@ -4,47 +4,75 @@ import java.time.LocalDate;
 import java.time.chrono.ChronoLocalDate;
 import java.time.temporal.ChronoUnit;
 
-public class PN extends Ordination {
+public class PN {
+
+    private LocalDate startDato;
+    private LocalDate slutDato;
+    private LocalDate sidsteDosis;
     private double antalEnheder;
+    private Laegemiddel laegemiddel;
     private int antalGangeGivet = 0;
 
-
-    public PN(LocalDate startDato, LocalDate slutDato, Laegemiddel laegemiddel, double antalEnheder) {
-        super(startDato, slutDato, laegemiddel); // Kalder superklassens konstruktor
+    public PN(LocalDate startDato, LocalDate slutDato, double antalEnheder, Laegemiddel laegemiddel) {
+        this.startDato = startDato;
+        this.slutDato = slutDato;
         this.antalEnheder = antalEnheder;
+        this.laegemiddel = laegemiddel;
     }
 
+    /**
+     * Registrerer at der er givet en dosis paa dagen givetDato
+     * Returnerer true hvis givetDato er inden for ordinationens gyldighedsperiode og datoen huskes
+     * Retrurner false ellers og datoen givetDato ignoreres
+     *
+     * @param givetDato
+     * @return
+     */
     public boolean givDosis(LocalDate givetDato) {
-        if (!givetDato.isBefore(getStartDato()) && !givetDato.isAfter(getSlutDato())) {
+        // Checker om dosis bliver givet i en valid periode. Hvis dosis bliver givet udenfor perioden, retuneres false
+        if (givetDato.isAfter(startDato.minusDays(1)) && givetDato.isBefore(slutDato.plusDays(1))) {
+            sidsteDosis = givetDato;
             antalGangeGivet++;
             return true;
         }
         return false;
     }
 
-    @Override
-    public double samletDosis() {
-        return antalEnheder * antalGangeGivet;
-    }
-
-    @Override
     public double doegnDosis() {
-        if (antalGangeGivet == 0) {
-            return 0.0; // Undgår division med 0
-        }
-        return samletDosis() / antalDage();
+        // Finder antal dage mellem startdatoen og slutdatoen
+        long dageImellemDosis = ChronoUnit.DAYS.between(startDato, slutDato);
+        // Udregner døgndosis baseret på antallet af enhededr og antallet af dage mellem doseringer
+        return (antalEnheder * antalGangeGivet) / dageImellemDosis;
     }
 
-    @Override
-    public String getType() {
-        return "PN";
-    }
 
+    public double samletDosis() {
+        // Finder antal dage mellem startdatoen og slutdatoen
+        long dageImellemDosis = ChronoUnit.DAYS.between(startDato, slutDato);
+        return antalEnheder * dageImellemDosis;
+    }
+    /**
+     * Returnerer antal gange ordinationen er anvendt
+     *
+     * @return
+     */
     public int getAntalGangeGivet() {
         return antalGangeGivet;
     }
 
     public double getAntalEnheder() {
         return antalEnheder;
+    }
+
+    public Laegemiddel getLaegemiddel() {
+        return laegemiddel;
+    }
+
+    public LocalDate getStartDato() {
+        return startDato;
+    }
+
+    public LocalDate getSlutDato() {
+        return slutDato;
     }
 }

@@ -35,8 +35,8 @@ public class Controller {
         if (!checkStartFoerSlut(startDato, slutDato)) {
             throw new IllegalArgumentException("Startdatoen skal være før slutdatoen");
         }
-        PN pn = new PN(startDato, slutDato,antal,laegemiddel);
-        patient.setOrdinationer(pn);
+        PN pn = new PN(startDato, slutDato, antal, laegemiddel);
+        patient.addPn(pn);
         return pn;
     }
 
@@ -47,8 +47,8 @@ public class Controller {
         if (!checkStartFoerSlut(startDato, slutDato)) {
             throw new IllegalArgumentException("Startdatoen skal være før slutdatoen");
         }
-        DagligFast dagligFast = new DagligFast(startDato, slutDato, laegemiddel, morgenAntal, middagAntal, aftenAntal,natAntal);
-        patient.setOrdinationer(dagligFast);
+        DagligFast dagligFast = new DagligFast(startDato, slutDato, laegemiddel, morgenAntal, middagAntal, aftenAntal, natAntal);
+        patient.addOrdinationer(dagligFast);
         return dagligFast;
     }
 
@@ -64,7 +64,7 @@ public class Controller {
             throw new IllegalArgumentException("Klokkeslet og antal enheder skal være ens");
         }
         DagligSkaev dagligSkaev = new DagligSkaev(startDato, slutDato, patient, laegemiddel, klokkeSlet, antalEnheder);
-        patient.setOrdinationer(dagligSkaev);
+        patient.addOrdinationer(dagligSkaev);
         return dagligSkaev;
     }
 
@@ -100,16 +100,22 @@ public class Controller {
      * ordinationer.
      */
     public int antalOrdinationerPrVaegtPrLaegemiddel(double vaegtStart, double vaegtSlut, Laegemiddel laegemiddel) {
+        int antalOrdinationer = 0;
+        List<Patient> patienter = getAllPatienter();
 
-        if(vaegtStart <= 25){
-            if(laegemiddel.getNavn().equals(laegemiddel)){
-                laegemiddel.getEnhed();
+        for (Patient patient : patienter) {
+            double patientVaegt = patient.getVaegt();
+
+            if (patientVaegt >= vaegtStart && patientVaegt <= vaegtSlut) {
+                List<Ordination> ordinationer = patient.getOrdinationer();
+                for (Ordination ordination : ordinationer) {
+                    if (ordination.getLaegemiddel().equals(laegemiddel)) {
+                        antalOrdinationer++;
+                    }
+                }
             }
         }
-        //Ikke færdigt endnu
-
-
-        return 0;
+        return antalOrdinationer;
     }
 
     public List<Patient> getAllPatienter() {
