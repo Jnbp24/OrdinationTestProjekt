@@ -1,26 +1,40 @@
 package ordination;
 
+import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DagligSkaev {
-    private List<Dosis>doser = new ArrayList<>();
-    //DagligSkæv har composition til Ordination
-    private Ordination ordination;
+public class DagligSkaev extends Ordination {
+    private List<Dosis>doser;
 
-    public Ordination getOrdination() {
-        return ordination;
-    }
-
-    public void setOrdination(Ordination ordination) {
-        this.ordination = ordination;
+    public DagligSkaev(LocalDate startDato, LocalDate slutDato, Laegemiddel laegemiddel){
+        super(startDato, slutDato, laegemiddel);
+        this.doser =  new ArrayList<>();
     }
 
     public void opretDosis(LocalTime tid, double antal) {
-        doser.add(new Dosis(tid, antal));
+        Dosis dosis = new Dosis(tid, antal);
+        doser.add(dosis);
     }
+
     public Dosis[] getDoser() {
-        return new Dosis[0];
+        return doser.toArray(new Dosis[0]);
     }
+
+    @Override
+    public double samletDosis() {
+        return 0; // Fejl skal rettes
+    }
+
+    @Override
+    public double doegnDosis() {
+        return samletDosis() / antalDage();
+    }
+
+    @Override
+    public String getType() {
+        return "DagligSkaev";
+    }
+
 }
