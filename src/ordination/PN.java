@@ -75,4 +75,8 @@ public class PN {
     public LocalDate getSlutDato() {
         return slutDato;
     }
+
+    public LocalDate getSidsteDosis() {
+        return sidsteDosis;
+    }
 }

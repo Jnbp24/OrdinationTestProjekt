@@ -24,10 +24,10 @@ public class Laegemiddel {
     }
 
     public double anbefaletDosisPrDoegn(int vaegt) {
-        if (vaegt > 120) {
+        if (vaegt >= 120) {
             return enhedPrKgPrDoegnTung * vaegt;
         }
-        else if (vaegt < 25) {
+        else if (vaegt <= 25) {
             return enhedPrKgPrDoegnLet * vaegt;
         }
         else
