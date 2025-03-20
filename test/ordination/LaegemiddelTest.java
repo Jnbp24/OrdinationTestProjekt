@@ -44,7 +44,7 @@ class LaegemiddelTest {
     }
 
     @Test
-    void anbefaletDosisPrDoegnPræcis25Let(){
+    void anbefaletDosisPrDoegnPræcis25Normal(){
         double expected = 0.025 * 25;
         double result = laegemiddel.anbefaletDosisPrDoegn(25);
 
@@ -52,7 +52,7 @@ class LaegemiddelTest {
         System.out.println(result);
     }
     @Test
-    void anbefaletDosisPrDoegnPræcis120Tung(){
+    void anbefaletDosisPrDoegnPræcis120Normal(){
         double expected = 0.025 * 120;
         double result = laegemiddel.anbefaletDosisPrDoegn(120);
 
