@@ -6,8 +6,8 @@ public class Patient {
     private String cprnr;
     private String navn;
     private double vaegt;
-    private ArrayList<Ordination> ordinationer;
-    private ArrayList<PN> pns;
+    private ArrayList<Ordination> ordinationer = new ArrayList<>();
+    private ArrayList<PN> pns = new ArrayList<>();
 
     public Patient(String cprnr, String navn, double vaegt) {
         this.cprnr = cprnr;
@@ -36,7 +36,7 @@ public class Patient {
     }
 
     public void addOrdinationer(Ordination ordination) {
-        if (ordinationer.contains(ordination)) {
+        if (!ordinationer.contains(ordination)) {
             ordinationer.add(ordination);
         }
     }
@@ -51,7 +51,7 @@ public class Patient {
     }
 
     public void addPn(PN pn) {
-        if(pns.contains(pn)){
+        if(!pns.contains(pn)){
             pns.add(pn);
         }
     }
