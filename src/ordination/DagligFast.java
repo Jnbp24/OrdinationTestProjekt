@@ -1,6 +1,7 @@
 package ordination;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 
 public class DagligFast extends Ordination {
     private Dosis[] doser;
@@ -9,12 +10,18 @@ public class DagligFast extends Ordination {
     private double aftenAntal;
     private double natAntal;
 
-    public DagligFast(LocalDate startDato, LocalDate slutDato, Laegemiddel laegemiddel, double morgenAntal, double middagAntal, double aftenAntal, double natAntal){
-        super(startDato,slutDato,laegemiddel);
+    public DagligFast(LocalDate startDato, LocalDate slutDato, Laegemiddel laegemiddel, double morgenAntal, double middagAntal, double aftenAntal, double natAntal) {
+        super(startDato, slutDato, laegemiddel);
         this.morgenAntal = morgenAntal;
         this.middagAntal = middagAntal;
         this.aftenAntal = aftenAntal;
         this.natAntal = natAntal;
+        this.doser = new Dosis[4];
+
+        doser[0] = new Dosis(LocalTime.of(6, 0), morgenAntal);
+        doser[1] = new Dosis(LocalTime.of(12, 0), middagAntal);
+        doser[2] = new Dosis(LocalTime.of(18, 0), aftenAntal);
+        doser[3] = new Dosis(LocalTime.of(00, 0), natAntal);
 
     }
 

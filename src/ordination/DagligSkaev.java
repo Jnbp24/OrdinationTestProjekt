@@ -18,6 +18,16 @@ public class DagligSkaev extends Ordination {
         doser.add(dosis);
     }
 
+    public Dosis[] opretDoser(LocalTime[] tider, double[] antal) {
+        Dosis[] doser = new Dosis[tider.length];
+        for (int i = 0; i < tider.length; i++) {
+            doser[i]= new Dosis(tider[i], antal[i]);
+            this.doser.add(doser[i]);
+        }
+
+        return doser;
+    }
+
     public Dosis[] getDoser() {
         return doser.toArray(new Dosis[0]);
     }

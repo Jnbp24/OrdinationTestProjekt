@@ -4,7 +4,7 @@ import java.time.LocalDate;
 import java.time.chrono.ChronoLocalDate;
 import java.time.temporal.ChronoUnit;
 
-public class PN {
+public class PN extends Ordination {
 
     private LocalDate startDato;
     private LocalDate slutDato;
@@ -14,10 +14,8 @@ public class PN {
     private int antalGangeGivet = 0;
 
     public PN(LocalDate startDato, LocalDate slutDato, double antalEnheder, Laegemiddel laegemiddel) {
-        this.startDato = startDato;
-        this.slutDato = slutDato;
+        super(startDato, slutDato, laegemiddel);
         this.antalEnheder = antalEnheder;
-        this.laegemiddel = laegemiddel;
     }
 
     /**
@@ -43,6 +41,11 @@ public class PN {
         long dageImellemDosis = ChronoUnit.DAYS.between(startDato, slutDato);
         // Udregner døgndosis baseret på antallet af enhededr og antallet af dage mellem doseringer
         return (antalEnheder * antalGangeGivet) / dageImellemDosis;
+    }
+
+    @Override
+    public String getType() {
+        return "PN";
     }
 
 
