@@ -9,6 +9,7 @@ public class Patient {
     private ArrayList<Ordination> ordinationer = new ArrayList<>();
     private ArrayList<PN> pns = new ArrayList<>();
 
+
     public Patient(String cprnr, String navn, double vaegt) {
         this.cprnr = cprnr;
         this.navn = navn;
@@ -51,8 +52,12 @@ public class Patient {
     }
 
     public void addPn(PN pn) {
-        if(!pns.contains(pn)){
+        if (!pns.contains(pn)) {
             pns.add(pn);
         }
+    }
+
+    public ArrayList<PN> getPns() {
+        return pns;
     }
 }

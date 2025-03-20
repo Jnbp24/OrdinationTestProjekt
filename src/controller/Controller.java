@@ -64,6 +64,7 @@ public class Controller {
             throw new IllegalArgumentException("Klokkeslet og antal enheder skal være ens");
         }
         DagligSkaev dagligSkaev = new DagligSkaev(startDato, slutDato, laegemiddel);
+        dagligSkaev.opretDoser(klokkeSlet, antalEnheder);
         patient.addOrdinationer(dagligSkaev);
         return dagligSkaev;
     }
