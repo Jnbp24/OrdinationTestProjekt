@@ -63,6 +63,9 @@ public class Controller {
         if (klokkeSlet.length != antalEnheder.length) {
             throw new IllegalArgumentException("Klokkeslet og antal enheder skal være ens");
         }
+        if (laegemiddel.anbefaletDosisPrDoegn(patient.getVaegt()) < calcDosisPrDoegn(antalEnheder)) {
+            throw new IllegalArgumentException("Dosis overskrider anbefalet dosis pr døgn");
+        }
         DagligSkaev dagligSkaev = new DagligSkaev(startDato, slutDato, laegemiddel);
         dagligSkaev.opretDoser(klokkeSlet, antalEnheder);
         patient.addOrdinationer(dagligSkaev);
@@ -179,6 +182,16 @@ public class Controller {
         double[] an = {0.5, 1, 2.5, 3};
 
         this.opretDagligSkaevOrdination(LocalDate.of(2025, 1, 23), LocalDate.of(2025, 1, 24), storage.getAllPatienter().get(1), storage.getAllLaegemidler().get(2), kl, an);
+    }
+
+    private double calcDosisPrDoegn(double[] antal) {
+        int antalDage = antal.length;
+        double totalAntal = 0;
+
+        for (double v : antal) {
+            totalAntal += v;
+        }
+        return totalAntal / antalDage;
     }
 
 }

@@ -43,6 +43,13 @@ public class ControllerTest {
     }
 
     @Test
+    void throwArgument() {
+        LocalTime[] tider = {LocalTime.of(8, 0), LocalTime.of(18, 0)};
+        double[] antalEnheder = {3, 3};
+        assertThrows(IllegalArgumentException.class, () -> controller.opretDagligSkaevOrdination(startDate, endDate, patient, laegemiddel, tider, antalEnheder));
+    }
+
+    @Test
     void opretDagligFast() {
         DagligFast dagligFast = controller.opretDagligFastOrdination(startDate, endDate, patient, laegemiddel, 1, 2, 3, 4);
         assertNotNull(dagligFast);
