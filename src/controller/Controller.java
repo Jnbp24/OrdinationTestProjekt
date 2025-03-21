@@ -36,7 +36,8 @@ public class Controller {
             throw new IllegalArgumentException("Startdatoen skal være før slutdatoen");
         }
         PN pn = new PN(startDato, slutDato, antal, laegemiddel);
-        patient.addPn(pn);
+        patient.addOrdinationer(pn);
+        System.out.println(pn);
         return pn;
     }
 
