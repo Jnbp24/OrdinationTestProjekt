@@ -1,6 +1,6 @@
-package ordination;
+package controller;
 
-import controller.Controller;
+import ordination.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
